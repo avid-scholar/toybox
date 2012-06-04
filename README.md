@@ -20,4 +20,4 @@ inside the repository you may find:
 7. whatever may become my interest in future (e.g. linux kernel module planned)
 
 
-If not specified otherwise target platform is always amd64 linux 2.6.x/3.x.x, compiler is gcc 4.2 or newer gcc (some dependencies on gcc extensions may be present). Most of mentioned is a rewrite of once written in proprietary projects, but there is absolutely no proprietary code here. Moreover i am reluctant to introduce any dependencies including boost and stl. Instead i prefer simpler and feature-scarce code which only does what i need. I'll appreciate any fixes, suggestions and any like input especially on 1 and 2. However quite likely i will not be able to respond immediatly.
+If not specified otherwise target platform is always amd64 linux 2.6.x/3.x.x, compiler is gcc 4.2 or newer gcc (some dependencies on gcc extensions may be present). Most of mentioned is a rewrite of once written in proprietary projects, but there is absolutely no proprietary code here. Moreover i am reluctant to introduce any dependencies including boost and stl. Instead i prefer simpler and feature-scarce code which only does what i need.
