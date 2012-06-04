@@ -17,4 +17,10 @@ lib ext_boost_system            : : <name>boost_system ;
 lib ext_boost_random            : : <name>boost_random ;
 lib ext_boost_regex             : : <name>boost_regex ;
 
+make map.png : map.DOT : @draw_graph ;
+actions draw_graph
+{
+   dot $(>) -Tpng > $(<)
+}
 
+alias map : map.png ;
