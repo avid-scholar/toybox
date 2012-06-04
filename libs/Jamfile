@@ -1,2 +1,2 @@
-lib log : log/log.cpp ;
+lib log : log/log.cpp : : : ;
 exe log-test : log log/log-test.cpp ;
