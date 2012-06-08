@@ -1,1 +1,0 @@
-bin/gcc-4.6.1/debug/map.svg
