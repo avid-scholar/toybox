@@ -1,8 +1,22 @@
-#ifndef AEON__LIBS_BINDATA_BSTRING_CPP
-#define AEON__LIBS_BINDATA_BSTRING_CPP 1
+#ifndef AEON__LIBS_BINDATA_BSTRING_H
+#define AEON__LIBS_BINDATA_BSTRING_H 1
 
-#include <string>
+#include "brange.h"
+#include "utils/swap.h"
 
-typedef std::string bstring;
+struct bstring
+{
+   bstring ();
+   bstring (bstring const &);
+   bstring (const_brange);
+   bstring& operator= (bstring const &);
+   void swap (bstring &r) { ut::swap (r, data); }
 
-#endif //AEON__LIBS_BINDATA_BSTRING_CPP
+   ulong size () const;
+   const_brange bytes () const;
+
+private:
+   char *data;
+};
+
+#endif //AEON__LIBS_BINDATA_BSTRING_H

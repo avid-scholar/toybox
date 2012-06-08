@@ -8,13 +8,14 @@ sub add_edge
    my ($beg, $end) = (@_);
    $e{$beg} = {} unless exists $e{$beg};
    $e{$beg}->{$end} = 1;
-   #print "add_edge $beg , $end\n";
+#   print "add_edge $beg , $end\n";
 }
 
 while (<STDIN>)
 {
+#   print "+++: $_";
    chomp;
-   next unless m/^( *)([^ ][-_0-9A-Za-z\/ ]+[-_0-9a-zA-Z])( +[^-_a-zA-Z ].*)?$/;
+   next unless m/^( *)([^ ]+)( +[^ ].*)?$/;
    my $is_root = $1 eq "";
    my $node = $2;
    my $ext = $3;
@@ -28,12 +29,11 @@ while (<STDIN>)
    }
 
    my $done;
-   #print "ext=$ext\n";
+#   print "===", $is_root ? "!" : "-", "super=$w node=$node ext=$ext\n";
    my @ext;
-   while ($ext =~ s/^ *([^ ][a-zA-Z_ ]*)(.*)$/$2/)
+   while ($ext =~ s/^ *([^ ]+)( .*)?$/$2/)
    {
       my $x = $1;
-      $x =~ s/^ *(.*?) *$/$1/;
       $done = 1 if $x eq "+";
       push @ext, $x;
    }

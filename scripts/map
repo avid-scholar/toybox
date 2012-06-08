@@ -1,7 +1,7 @@
 brange
    range template
 
-algorithm range adaptors
+algorithm-range-adaptors
    range template
 
 bstring/stub +
@@ -9,17 +9,18 @@ bstring/stub +
 bstring +
    brange
    /stub
+   /octets
    /variant
 
-bstring/variant 
-   /octets
+bstring/variant
    /static
-   /base64
+   /packed
+   /external_allocator :tc_lf_allocator
+
+bstring/variant/packed
+   /en6bit
    /en5bit
    /number
-
-bstring/variant/octets
-   /external_allocator :tc_lf_allocator
 
 log +
    bstring
@@ -31,11 +32,12 @@ log/stub +
 bchunk_stream
    bstring
    bchunk_chain
-   /cached :bchunk_lf_factory
+   /cached
+
+bchunk_stream/cached :bchunk_chain :bchunk_lf_factory
 
 bchunk_chain
-   bchunk
-   bchunk_new_delete_factory :object_factory
+   bchunk_new_delete_factory :object_factory :bchunk
 
 lf_aux +
 lf_stock + :lf_aux
