@@ -1,0 +1,75 @@
+brange
+   range template
+
+algorithm range adaptors
+   range template
+
+bstring/stub +
+
+bstring +
+   brange
+   /stub
+   /variant
+
+bstring/variant 
+   /octets
+   /static
+   /base64
+   /en5bit
+   /number
+
+bstring/variant/octets
+   /external_allocator :tc_lf_allocator
+
+log +
+   bstring
+   /streamed :bchunk_stream
+   /stub
+
+log/stub +
+
+bchunk_stream
+   bstring
+   bchunk_chain
+   /cached :bchunk_lf_factory
+
+bchunk_chain
+   bchunk
+   bchunk_new_delete_factory :object_factory
+
+lf_aux +
+lf_stock + :lf_aux
+lf_tool_ptr + :lf_aux
+lf_stack + :lf_tool_ptr
+
+futex_que
+   lf_stock :lf_aux
+   /stub
+   /futex_wrapper :syscall_wrapper
+
+bchunk_lf_cache
+   lf_stack
+
+bchunk_lf_factory
+   /stub
+   /cached :bchunk_lf_cache
+
+tc_lf_allocator
+   bchunk_lf_factory
+   xo_stack_frame
+
+scan
+   scan_basic
+   scan_extension :generic_extension
+
+format
+   format_basic
+   format_extension :generic_extension
+
+scan_kit
+   bchunk_stream
+   scan
+
+format_kit
+   bchunk_stream
+   format

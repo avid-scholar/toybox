@@ -1,9 +1,0 @@
-digraph map {
-   st_bstring [ label = "bstring stub", style = filled, fillcolor = palegreen ];
-   st_bstring -> bstring ;
-
-   st_log [ label = "log stub" ] ;
-   st_log -> log ;
-
-   bstring -> log ;
-}
