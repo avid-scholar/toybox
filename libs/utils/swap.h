@@ -44,6 +44,6 @@ swap (T &a, T &b)
    swap_dispatch (a, b, sfinae_swap <T>::type::mk ()); 
 }
 
-} //namespace ut 
+} //namespace ut
 
 #endif //AEON__LIBS_UTILS_SWAP_H

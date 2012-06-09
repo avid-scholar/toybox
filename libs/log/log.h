@@ -1,10 +1,9 @@
 #ifndef AEON__LIBS_LOG_LOG_H
 #define AEON__LIBS_LOG_LOG_H 1
 
-#include "bindata/bstring.h"
+#include "mem/mstring.h"
+#include "utils/commands.h"
 #include <sstream>
-
-struct command__convert_to_string {} C2S __attribute__ ((weak));
 
 namespace lg
 {
@@ -19,7 +18,7 @@ struct fmt
       return *this;
    }
 
-   std::string operator<< (command__convert_to_string const &) { return str (); }
+   std::string operator<< (command__convert_to_string const &) const { return str (); }
    operator std::string () const { return str (); }
    std::string str () const { return buf.str (); }
 

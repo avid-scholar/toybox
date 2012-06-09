@@ -1,5 +1,6 @@
 #ifndef AEON__LIBS_NET_TCP_CLIENT_H
 #define AEON__LIBS_NET_TCP_CLIENT_H 1
+
 #include "ip.h"
 #include <boost/shared_ptr.hpp>
 
@@ -30,4 +31,5 @@ private:
 };
 
 }
+
 #endif //AEON__LIBS_NET_TCP_CLIENT_H

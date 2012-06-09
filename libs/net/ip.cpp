@@ -4,18 +4,29 @@
 namespace ip
 {
 
-point::point (std::string const &l, std::string const &r)
+point::point (mstring_ref l, mstring_ref r)
 {
    port = boost::lexical_cast <unsigned short> (r);
    addr = invalid_address;
    host = l;
 }
 
-point::point (std::string const &s)
+//ip -- at max 15 4-bit digits //16 digits at most,
+//255.255.255.255, 16 - 1 = 15m, 15 * 4 = 60 bit + 4 control bits, everything on x64
+//ip consists of [0-9.], except for dots all meaningfull, we may also need total length
+
+point::point (mstring_ref s)
+{
+   mstring m (s);
+   parse_impl (m);
+}
+
+point::parse_impl (mstring &s)
 {
    addr = invalid_address;
    size_t c = s.find (':');
-   if (c == std::string::npos)
+   mstring rest;
+   if (sa::split (s, ":", &rest))
    {
       host = s;
       port = 80;
@@ -23,7 +34,7 @@ point::point (std::string const &s)
    else
    {
       host.assign (s.begin (), s.begin () + c);
-      port = scan_throw <unsigned short> (bits::const_char_buf (s.data () + c + 1, s.size () - c - 1));
+      port = scan_throw <unsigned short> (mrange_const (s.data () + c + 1, s.size () - c - 1));
    }
 }
 

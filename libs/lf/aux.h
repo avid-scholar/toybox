@@ -109,5 +109,4 @@ trace_push_chain (H *h, T *b)
 
 } //namespace lf2
 
-
 #endif //AEON__LIBS_LF_AUX_H

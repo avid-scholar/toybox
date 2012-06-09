@@ -30,5 +30,4 @@ struct new_delete_factory
    }
 };
 
-
 #endif //AEON__LIBS_UTILS_NEW_DELETE_FACTORY_H

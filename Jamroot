@@ -24,3 +24,5 @@ actions draw_graph
 }
 
 alias map : map.svg ;
+
+exe test_xm : exe/tests/xm.cpp ;

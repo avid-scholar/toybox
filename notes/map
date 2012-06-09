@@ -71,9 +71,9 @@ format
    format_extension :generic_extension
 
 scan_kit
-   mchunk_stream
+   mstream
    scan
 
 format_kit
-   mchunk_stream
+   mstream
    format

@@ -105,5 +105,4 @@ struct claimable_block_stock
 
 } //namespace lf2
 
-
 #endif //AEON__LIBS_LF_BLOCK_STOCK_H

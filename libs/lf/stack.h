@@ -43,5 +43,4 @@ private:
 
 } //namespace lf2
 
-
 #endif //AEON__LIBS_LF_STACK_H

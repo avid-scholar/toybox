@@ -3,7 +3,7 @@
 
 #include "utils/range.h"
 
-typedef range_template <byte *>  brange;
-typedef range_template <byte const *>  cont_brange;
+typedef range_template <byte *> mrange;
+typedef range_template <byte const *> mrange_const;
 
 #endif //AEON__LIBS_MEM_MRANGE_H

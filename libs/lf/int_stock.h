@@ -40,5 +40,4 @@ public:
 
 } //namespace lf2
 
-
 #endif //AEON__LIBS_LF_INT_STOCK_H
