@@ -1,5 +1,5 @@
-#ifndef LIBS_LF_INT_STOCK_H
-#define LIBS_LF_INT_STOCK_H 1
+#ifndef AEON__LIBS_LF_INT_STOCK_H
+#define AEON__LIBS_LF_INT_STOCK_H 1
 
 #include "aux.h"
 #include "utils/cxx.h"
@@ -41,4 +41,4 @@ public:
 } //namespace lf2
 
 
-#endif //LIBS_LF_INT_STOCK_H
+#endif //AEON__LIBS_LF_INT_STOCK_H

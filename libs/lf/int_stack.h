@@ -1,5 +1,5 @@
-#ifndef LIBS_LF_INT_STACK_H
-#define LIBS_LF_INT_STACK_H 1
+#ifndef AEON__LIBS_LF_INT_STACK_H
+#define AEON__LIBS_LF_INT_STACK_H 1
 
 #include "tool_ptr.h"
 #include "utils/flink.h"
@@ -101,4 +101,4 @@ public:
 } //namespace lf2
 
 
-#endif //LIBS_LF_INT_STACK_H
+#endif //AEON__LIBS_LF_INT_STACK_H

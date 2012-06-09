@@ -1,5 +1,5 @@
-#ifndef LIBS_UTILS_SLIST_H
-#define LIBS_UTILS_SLIST_H 1
+#ifndef AEON__LIBS_UTILS_SLIST_H
+#define AEON__LIBS_UTILS_SLIST_H 1
 
 #include "flink.h"
 #include "int_slist.h" 
@@ -25,4 +25,4 @@ private:
    impl_t impl;
 };
 
-#endif //LIBS_UTILS_SLIST_H
+#endif //AEON__LIBS_UTILS_SLIST_H

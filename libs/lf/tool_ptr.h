@@ -1,5 +1,5 @@
-#ifndef LIBS_LF_TOOL_PTR_H
-#define LIBS_LF_TOOL_PTR_H 1
+#ifndef AEON__LIBS_LF_TOOL_PTR_H
+#define AEON__LIBS_LF_TOOL_PTR_H 1
 
 #include "aux.h"
 
@@ -144,4 +144,4 @@ struct tool_ptr
 
 } //namespace lf2
 
-#endif //LIBS_LF_TOOL_PTR_H
+#endif //AEON__LIBS_LF_TOOL_PTR_H

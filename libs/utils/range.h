@@ -1,5 +1,5 @@
-#ifndef AEON__LIBS_UTILS_RANGE_TEMPLATE_H
-#define AEON__LIBS_UTILS_RANGE_TEMPLATE_H 1
+#ifndef AEON__LIBS_UTILS_RANGE_H
+#define AEON__LIBS_UTILS_RANGE_H 1
 
 #include "utils/types.h"
 
@@ -24,4 +24,4 @@ struct range_template
    ulong size () const { return e - b; }
 };
 
-#endif //AEON__LIBS_UTILS_RANGE_TEMPLATE_H
+#endif //AEON__LIBS_UTILS_RANGE_H

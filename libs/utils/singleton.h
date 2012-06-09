@@ -1,5 +1,5 @@
-#ifndef LIBS_UTILS_SINGLETON_H
-#define LIBS_UTILS_SINGLETON_H 1
+#ifndef AEON__LIBS_UTILS_SINGLETON_H
+#define AEON__LIBS_UTILS_SINGLETON_H 1
 
 template <typename T>
 T &
@@ -9,4 +9,4 @@ singleton ()
    return t;
 }
 
-#endif //LIBS_UTILS_SINGLETON_H
+#endif //AEON__LIBS_UTILS_SINGLETON_H

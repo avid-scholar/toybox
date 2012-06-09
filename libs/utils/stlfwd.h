@@ -1,5 +1,5 @@
-#ifndef LIBS_UTILS_STLFWD_H
-#define LIBS_UTILS_STLFWD_H 1
+#ifndef AEON__LIBS_UTILS_STLFWD_H
+#define AEON__LIBS_UTILS_STLFWD_H 1
 
 namespace std
 {
@@ -25,4 +25,4 @@ template <typename T> class auto_ptr;
 
 } //namespace std
 
-#endif //LIBS_UTILS_STLFWD_H
+#endif //AEON__LIBS_UTILS_STLFWD_H

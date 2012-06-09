@@ -1,5 +1,5 @@
-#ifndef AEON__LIBS_BINDATA_BSTRING_H
-#define AEON__LIBS_BINDATA_BSTRING_H 1
+#ifndef AEON__LIBS_MEM_MSTRING_H
+#define AEON__LIBS_MEM_MSTRING_H 1
 
 #include "brange.h"
 #include "utils/swap.h"
@@ -22,4 +22,4 @@ private:
    char *data;
 };
 
-#endif //AEON__LIBS_BINDATA_BSTRING_H
+#endif //AEON__LIBS_MEM_MSTRING_H

@@ -1,5 +1,5 @@
-#ifndef LIBS_UTILS_NEW_DELETE_FACTORY_H
-#define LIBS_UTILS_NEW_DELETE_FACTORY_H 1
+#ifndef AEON__LIBS_UTILS_NEW_DELETE_FACTORY_H
+#define AEON__LIBS_UTILS_NEW_DELETE_FACTORY_H 1
 
 #include "utils/cxx.h"
 
@@ -31,4 +31,4 @@ struct new_delete_factory
 };
 
 
-#endif //LIBS_UTILS_NEW_DELETE_FACTORY_H
+#endif //AEON__LIBS_UTILS_NEW_DELETE_FACTORY_H

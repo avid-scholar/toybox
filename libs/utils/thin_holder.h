@@ -1,5 +1,5 @@
-#ifndef LIBS_UTILS_THIN_HOLDER_H
-#define LIBS_UTILS_THIN_HOLDER_H 1
+#ifndef AEON__LIBS_UTILS_THIN_HOLDER_H
+#define AEON__LIBS_UTILS_THIN_HOLDER_H 1
 
 #include "cxx.h"
 
@@ -21,4 +21,4 @@ struct thin_holder <A, true>
    A thin_get () const { return A (); }
 };
 
-#endif //LIBS_UTILS_THIN_HOLDER_H
+#endif //AEON__LIBS_UTILS_THIN_HOLDER_H

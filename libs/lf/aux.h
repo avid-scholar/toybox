@@ -1,5 +1,5 @@
-#ifndef LIBS_LF_AUX_H
-#define LIBS_LF_AUX_H 1
+#ifndef AEON__LIBS_LF_AUX_H
+#define AEON__LIBS_LF_AUX_H 1
 
 #include <cassert>
 #include "utils/cxx.h"
@@ -110,4 +110,4 @@ trace_push_chain (H *h, T *b)
 } //namespace lf2
 
 
-#endif //LIBS_LF_AUX_H
+#endif //AEON__LIBS_LF_AUX_H

@@ -1,5 +1,5 @@
-#ifndef LIBS_LF_BLOCK_STOCK_H
-#define LIBS_LF_BLOCK_STOCK_H 1
+#ifndef AEON__LIBS_LF_BLOCK_STOCK_H
+#define AEON__LIBS_LF_BLOCK_STOCK_H 1
 
 #include "tool_ptr.h"
 
@@ -106,4 +106,4 @@ struct claimable_block_stock
 } //namespace lf2
 
 
-#endif //LIBS_LF_BLOCK_STOCK_H
+#endif //AEON__LIBS_LF_BLOCK_STOCK_H

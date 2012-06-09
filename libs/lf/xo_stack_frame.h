@@ -1,5 +1,5 @@
-#ifndef LIBS_LF_XO_STACK_FRAME_H
-#define LIBS_LF_XO_STACK_FRAME_H 1
+#ifndef AEON__LIBS_LF_XO_STACK_FRAME_H
+#define AEON__LIBS_LF_XO_STACK_FRAME_H 1
 
 #include "lf/xo_stack.h"
 #include "lf/block_stock.h"
@@ -35,4 +35,4 @@ xo_pop (xo_stack <X, A> &xs, Gc &gc)
 
 } //namespace lf2
 
-#endif //LIBS_LF_XO_STACK_FRAME_H
+#endif //AEON__LIBS_LF_XO_STACK_FRAME_H

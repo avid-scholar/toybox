@@ -1,5 +1,5 @@
-#ifndef LIBS_UTILS_CXX_H
-#define LIBS_UTILS_CXX_H 1
+#ifndef AEON__LIBS_UTILS_CXX_H
+#define AEON__LIBS_UTILS_CXX_H 1
 
 template <bool b, typename Then, typename Else>
 struct if_
@@ -55,4 +55,4 @@ struct enable_if
    typedef T type;
 };
 
-#endif //LIBS_UTILS_CXX_H
+#endif //AEON__LIBS_UTILS_CXX_H

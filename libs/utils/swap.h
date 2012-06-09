@@ -1,5 +1,5 @@
-#ifndef LIBS_UTILS_SWAP_H
-#define LIBS_UTILS_SWAP_H 1
+#ifndef AEON__LIBS_UTILS_SWAP_H
+#define AEON__LIBS_UTILS_SWAP_H 1
 
 #include "cxx.h"
 
@@ -46,4 +46,4 @@ swap (T &a, T &b)
 
 } //namespace ut 
 
-#endif //LIBS_UTILS_SWAP_H
+#endif //AEON__LIBS_UTILS_SWAP_H
