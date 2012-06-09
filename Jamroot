@@ -17,7 +17,7 @@ lib ext_boost_system            : : <name>boost_system ;
 lib ext_boost_random            : : <name>boost_random ;
 lib ext_boost_regex             : : <name>boost_regex ;
 
-make map.svg : scripts/map : @draw_graph ;
+make map.svg : notes/map : @draw_graph ;
 actions draw_graph
 {
    perl scripts/map.pl <$(>) | dot -Tsvg > $(<)

@@ -1,43 +1,45 @@
-brange
-   range template
+range +
 
-algorithm-range-adaptors
-   range template
+mrange + :range
 
-bstring/stub +
+algorithm_range_adaptors
+   range
 
-bstring +
-   brange
+mstring/stub +
+
+mstring +
+   mrange
    /stub
    /octets
    /variant
 
-bstring/variant
+mstring/variant
    /static
    /packed
    /external_allocator :tc_lf_allocator
 
-bstring/variant/packed
+mstring/variant/packed
    /en6bit
    /en5bit
    /number
 
 log +
-   bstring
-   /streamed :bchunk_stream
+   mstring
+   /streamed :mstream
    /stub
 
 log/stub +
 
-bchunk_stream
-   bstring
-   bchunk_chain
+mstream
+   mstring
+   mchunk_chain
    /cached
+   /stub
 
-bchunk_stream/cached :bchunk_chain :bchunk_lf_factory
+mstream/cached :mchunk_chain :mchunk_lf_factory
 
-bchunk_chain
-   bchunk_new_delete_factory :object_factory :bchunk
+mchunk_chain
+   mchunk_new_delete_factory :object_factory :mchunk
 
 lf_aux +
 lf_stock + :lf_aux
@@ -49,15 +51,15 @@ futex_que
    /stub
    /futex_wrapper :syscall_wrapper
 
-bchunk_lf_cache
+mchunk_lf_cache
    lf_stack
 
-bchunk_lf_factory
+mchunk_lf_factory
    /stub
-   /cached :bchunk_lf_cache
+   /cached :mchunk_lf_cache
 
 tc_lf_allocator
-   bchunk_lf_factory
+   mchunk_lf_factory
    xo_stack_frame
 
 scan
@@ -69,9 +71,9 @@ format
    format_extension :generic_extension
 
 scan_kit
-   bchunk_stream
+   mchunk_stream
    scan
 
 format_kit
-   bchunk_stream
+   mchunk_stream
    format

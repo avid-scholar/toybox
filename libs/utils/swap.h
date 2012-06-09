@@ -3,7 +3,7 @@
 
 #include "cxx.h"
 
-namespace ns_utils
+namespace ut
 {
 
 template <typename T, typename V = void>
@@ -44,6 +44,6 @@ swap (T &a, T &b)
    swap_dispatch (a, b, sfinae_swap <T>::type::mk ()); 
 }
 
-} //namespace ns_utils
+} //namespace ut 
 
 #endif //LIBS_UTILS_SWAP_H

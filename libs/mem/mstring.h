@@ -14,6 +14,9 @@ struct bstring
 
    ulong size () const;
    const_brange bytes () const;
+   bool packed () const; //TODO
+
+   brange unpack (const_brange )
 
 private:
    char *data;
