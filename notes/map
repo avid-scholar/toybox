@@ -1,17 +1,41 @@
-range +
+project_generator
+   project_map
+   /syntax
+   /build
 
-mrange + :range
+project_generator/syntax
+   /class
+   /function
+   /template
+   /command
+
+project_map +
+   graphviz
+   /syntax
+   /build
+
+graphviz +
+project_map/syntax +
+project_map/build +
+
+range_template +
+
+ref_template
+
+mrange + :range_template
 
 algorithm_range_adaptors
-   range
-
-mstring/stub +
+   range_template
+   /string_algo /split
 
 mstring +
    mrange
+   /mstring_ref :ref_template
    /stub
    /octets
    /variant
+
+mstring/stub +
 
 mstring/variant
    /static
@@ -32,11 +56,8 @@ log/stub +
 
 mstream
    mstring
-   mchunk_chain
-   /cached
+   /cached :mchunk_chain :mchunk_lf_factory
    /stub
-
-mstream/cached :mchunk_chain :mchunk_lf_factory
 
 mchunk_chain
    mchunk_new_delete_factory :object_factory :mchunk

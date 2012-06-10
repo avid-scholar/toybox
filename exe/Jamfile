@@ -1,0 +1,2 @@
+exe test_xm : test/xm.cpp ;
+exe test_log : test/log.cpp ../libs//log ;

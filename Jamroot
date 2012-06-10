@@ -10,19 +10,16 @@ project : requirements
     <toolset>gcc
 ;
 
-lib ext_boost_datetime          : : <name>boost_date_time ;
-lib ext_boost_thread            : : <name>boost_thread ;
-lib ext_boost_asio              : : <name>boost_asio ;
-lib ext_boost_system            : : <name>boost_system ;
-lib ext_boost_random            : : <name>boost_random ;
-lib ext_boost_regex             : : <name>boost_regex ;
-
-make map.svg : notes/map : @draw_graph ;
-actions draw_graph
+make map.DOT : notes/map : @map_draw ;
+actions map_draw
 {
-   perl scripts/map.pl <$(>) | dot -Tsvg > $(<)
+   perl scripts/map.pl < $(>) > $(<)
 }
 
+make map.svg : map.DOT : @map_render ;
+actions map_render
+{
+   dot -Tsvg < $(>) > $(<) ; test -L m && rm m; ln -s $(<) m
+}
 alias map : map.svg ;
-
-exe test_xm : exe/tests/xm.cpp ;
+always map ;

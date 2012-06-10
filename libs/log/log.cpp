@@ -11,7 +11,6 @@ lg::lfmt::~lfmt ()
    time_t t = time (NULL);
    localtime_r (&t, &ttmp);
    char buf [40];
-   size_t n = strftime (buf, sizeof (buf), "%F %T", &ttmp);
-   out.resize (n);
+   strftime (buf, sizeof (buf), "%F %T", &ttmp);
    printf ("%s <%lx> %s\n", buf, (long) pthread_self (), s.c_str ());
 }

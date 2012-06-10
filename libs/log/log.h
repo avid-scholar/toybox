@@ -2,7 +2,7 @@
 #define AEON__LIBS_LOG_LOG_H 1
 
 #include "mem/mstring.h"
-#include "utils/commands.h"
+#include "utils/xm.h"
 #include <sstream>
 
 namespace lg
@@ -18,7 +18,7 @@ struct fmt
       return *this;
    }
 
-   std::string operator<< (command__convert_to_string const &) const { return str (); }
+   std::string operator<< (xm__to_string const &) const { return str (); }
    operator std::string () const { return str (); }
    std::string str () const { return buf.str (); }
 

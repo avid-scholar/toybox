@@ -1,2 +1,8 @@
-lib log : log/log.cpp : : : ;
-exe log-test : log log/log-test.cpp ;
+lib ext_boost_datetime          : : <name>boost_date_time ;
+lib ext_boost_thread            : : <name>boost_thread ;
+lib ext_boost_asio              : : <name>boost_asio ;
+lib ext_boost_system            : : <name>boost_system ;
+lib ext_boost_random            : : <name>boost_random ;
+lib ext_boost_regex             : : <name>boost_regex ;
+
+lib log : log/log.cpp ;

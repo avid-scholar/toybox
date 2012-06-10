@@ -1,5 +1,5 @@
-#ifndef AEON__LIBS_UTILS_RANGE_H
-#define AEON__LIBS_UTILS_RANGE_H 1
+#ifndef AEON__LIBS_UTILS_RANGE_TEMPLATE_H
+#define AEON__LIBS_UTILS_RANGE_TEMPLATE_H 1
 
 #include "xm.h"
 #include "types.h"
@@ -41,4 +41,4 @@ operator+ (T (&buf) [N], xm__to_range)
    return range_template <T *> (N ? buf : 0, N ? buf + N : 0);
 }
 
-#endif //AEON__LIBS_UTILS_RANGE_H
+#endif //AEON__LIBS_UTILS_RANGE_TEMPLATE_H

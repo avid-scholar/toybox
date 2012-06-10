@@ -8,12 +8,19 @@ sub add_edge
    my ($beg, $end) = (@_);
    $e{$beg} = {} unless exists $e{$beg};
    $e{$beg}->{$end} = 1;
-#   print "add_edge $beg , $end\n";
+   $v{$beg} = 0 unless exists $v{$beg};
+   #print "edge: $beg -> $end\n";
+}
+
+sub shname
+{
+   my $w = $_[0];
+   $w =~ s!.*/([^/]*)$!...$1!;
+   return $w;
 }
 
 while (<STDIN>)
 {
-#   print "+++: $_";
    chomp;
    next unless m/^( *)([^ ]+)( +[^ ].*)?$/;
    my $is_root = $1 eq "";
@@ -29,7 +36,6 @@ while (<STDIN>)
    }
 
    my $done;
-#   print "===", $is_root ? "!" : "-", "super=$w node=$node ext=$ext\n";
    my @ext;
    while ($ext =~ s/^ *([^ ]+)( .*)?$/$2/)
    {
@@ -40,12 +46,11 @@ while (<STDIN>)
 
    if ($is_root)
    {
-      die "vertice $node mentioned twice as root vertice" if exists $v{$node};
-      $v{$node} = 1 if $done;
-      print "\"$w\" [ style = filled, fillcolor = palegreen ] ;\n" if $done;
+      $v{$node} = $done;
    }
    else
    {
+      $v{$node} = 0 unless exists $v{$node};
       add_edge ($node, $w);
    }
 
@@ -56,19 +61,24 @@ while (<STDIN>)
       {
          add_edge ($1, $node);
       }
-      elsif ($x =~ m!^/$!)
+      elsif ($x =~ m!^/!)
       {
          add_edge ($node . $x, $node);
       }
    }
 }
 
-for my $k (keys (%e))
+for my $k (keys %v)
+{
+   print '"', $k, "\" [ ", $v{$k} ? "style = filled, fillcolor = palegreen,": "", " label = \"", shname ($k), "\" ] ;\n";
+}
+
+for my $k (keys %e)
 {
    my $ref = $e{$k}; 
    for my $k2 (keys (%$ref))
    {
-      print (" \"$k\" -> \"$k2\" ", exists $v{$k} ? " [ color = green ] " : "", "; \n");
+      print (" \"", $k, "\" -> \"", $k2, "\" ", $v{$k} ? " [ color = green ] " : "", "; \n");
    }
 }
 

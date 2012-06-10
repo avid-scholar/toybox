@@ -6,9 +6,9 @@
 template <typename T>
 struct tagged_ptr
 {
-   T *ptr () const { return (T*) (long) p; }
-   tagged_ptr add (long dt) const { return mk (ptr (), t + dt); }
-   operator bool () const { return p; }
+   T *ptr () const { return (T*) (long) pointer; }
+   tagged_ptr add (long dt) const { return mk (ptr (), tag + dt); }
+   operator bool () const { return pointer; }
 
    enum
    {
@@ -19,10 +19,10 @@ struct tagged_ptr
       tag_half = tag_max / 2
    };
 
-   static tagged_ptr mk (T *ptr = 0, int tag = 0)
+   static tagged_ptr mk (T const /*!!const is lost here!!*/ *ptr = 0, int tag = 0)
    {
       tagged_ptr p = {(long) ptr, tag};
-      return pointer;
+      return p;
    }
 
    long pointer : ptr_bits;
