@@ -1,6 +1,6 @@
 #!/bin/bash
 
-find -name '*.h' -o -name '*.txx' |
+find -name '*.h' -o -name '*.hxx' |
 while read f
 do
    ff=$(tr -- '-a-z./' '_A-Z__' <<< "$(pwd | sed 's!^.*/!!')$f")
