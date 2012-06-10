@@ -40,12 +40,14 @@ while (<STDIN>)
    while ($ext =~ s/^ *([^ ]+)( .*)?$/$2/)
    {
       my $x = $1;
-      $done = 1 if $x eq "+";
+      if ($x eq "+") { $done = 1; next; };
+      if ($x eq "!") { $done = 2; next; };
       push @ext, $x;
    }
 
    if ($is_root)
    {
+      $v{$node} && die "node $node appeared as root twice";
       $v{$node} = $done;
    }
    else
@@ -56,7 +58,6 @@ while (<STDIN>)
 
    for my $x (@ext)
    {
-      next if $x eq "+";
       if ($x =~ m/^:(.*)$/)
       {
          add_edge ($1, $node);
@@ -70,7 +71,10 @@ while (<STDIN>)
 
 for my $k (keys %v)
 {
-   print '"', $k, "\" [ ", $v{$k} ? "style = filled, fillcolor = palegreen,": "", " label = \"", shname ($k), "\" ] ;\n";
+   print '"', $k, "\" [ ",
+      $v{$k} == 1 ? "style = filled, fillcolor = palegreen," :
+      $v{$k} == 2 ? "style = filled, fillcolor = orange," :
+      "" , " label = \"", shname ($k), "\" ] ;\n";
 }
 
 for my $k (keys %e)

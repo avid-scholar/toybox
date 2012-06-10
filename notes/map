@@ -1,3 +1,26 @@
+function
+   /stub :boost.function
+   /light
+
+boost.function !
+   boost
+
+boost !
+
+http_client :tcp_client :scan_kit
+
+http_server :tcp_server :scan_kit
+
+tcp_client
+   tcp_session :ip_target :function
+
+tcp_server
+   tcp_session :ip_target :function
+
+ip_target +
+   /stub
+   /mstring + :mstring
+
 project_generator
    project_map
    /syntax
@@ -26,11 +49,12 @@ mrange + :range_template
 
 algorithm_range_adaptors
    range_template
-   /string_algo /split
+   /string_algo /split :mstring_ref
+
+mstring_ref :ref_template :mstring
 
 mstring +
    mrange
-   /mstring_ref :ref_template
    /stub
    /octets
    /variant
