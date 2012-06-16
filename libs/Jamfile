@@ -6,3 +6,4 @@ lib ext_boost_random            : : <name>boost_random ;
 lib ext_boost_regex             : : <name>boost_regex ;
 
 lib log : log/log.cpp ;
+lib sa : utils/sa.cpp ;

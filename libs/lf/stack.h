@@ -7,9 +7,9 @@ namespace lf2
 {
 
 template <typename T>
-struct stack_node : public flink <tagged_ptr <stack_node <T> > >, public shared_count
+struct stack_node : public flink <tagged_data <stack_node <T> > >, public shared_count
 {
-   typedef tagged_ptr <stack_node <T> > next_type;
+   typedef tagged_data <stack_node <T> > next_type;
    typedef flink <next_type> next_holder;
 
    stack_node (T const &t) : next_holder (next_type::mk (0, 0)), shared_count (1), data (t) {}

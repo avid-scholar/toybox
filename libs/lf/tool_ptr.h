@@ -2,7 +2,7 @@
 #define AEON__LIBS_LF_TOOL_PTR_H 1
 
 #include "aux.h"
-#include "utils/tagged_ptr.h"
+#include "utils/tagged_data.h"
 
 namespace lf2
 {
@@ -10,7 +10,7 @@ namespace lf2
 template <typename T>
 struct tool_ptr
 {
-   typedef tagged_ptr <T> ptr_t;
+   typedef tagged_data <T> ptr_t;
 
    ptr_t p_;
 
@@ -32,10 +32,10 @@ struct tool_ptr
          if (f.cancel (t))
             return false;
 
-         long picked = t.ptr () ? f.pick (t) : 0;
+         long picked = t.data () ? f.pick (t) : 0;
          if (picked)
          {
-            assert (picked + t.tag < ptr_t::tag_max);
+            assert (picked + t.tag () < ptr_t::tag_max);
             ptr_t t2 = t.add (picked);
             if (!atomic_cas (&p_, t, t2))
             {
@@ -58,11 +58,11 @@ struct tool_ptr
 
             ptr_t told = t;
             t = p_;
-            if (told.ptr () == t.ptr ())
+            if (told.data () == t.data ())
                continue;
 
             if (picked)
-               f.score (told.ptr (), -picked);
+               f.score (told.data (), -picked);
 
             break;
          }
@@ -102,11 +102,11 @@ struct tool_ptr
 
       pop_func (ptr_t *res, A a = A ()) : thin_holder <A> (a), result (res) { }
 
-      bool cancel (ptr_t p) const { return p.ptr () == 0; }
+      bool cancel (ptr_t p) const { return p.data () == 0; }
 
       long pick (ptr_t) const { return 1; }
 
-      ptr_t propose (ptr_t p) const { return p.ptr ()->next; }
+      ptr_t propose (ptr_t p) const { return p.data ()->next; }
 
       void score (T *p, long dn) { score_dispose (p, Multiplier * dn, this->thin_get ()); }
 

@@ -9,7 +9,7 @@ namespace lf2
 {
 
 template <typename X>
-struct xo_node : public flink <tagged_ptr <xo_node <X> > >, public shared_count
+struct xo_node : public flink <tagged_data <xo_node <X> > >, public shared_count
 {
    xo_node (X *x = 0) : external (x) {}
    X *external; 
@@ -43,8 +43,8 @@ struct xo_stack
          if (!h)
             return 0;
 
-         node_t *n = h.ptr ();
-         long dn = h.tag * mul;
+         node_t *n = h.data ();
+         long dn = h.tag () * mul;
          for ( ; ; )
          {
             long c = n->score (0);

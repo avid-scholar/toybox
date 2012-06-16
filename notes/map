@@ -19,7 +19,9 @@ tcp_server
 
 ip_target +
    /stub
-   /mstring + :mstring
+   /mstring :mstring
+
+ip_target/mstring +
 
 project_generator
    project_map
@@ -43,7 +45,7 @@ project_map/build +
 
 range_template +
 
-ref_template
+ref_template +
 
 mrange + :range_template
 
@@ -51,7 +53,11 @@ algorithm_range_adaptors
    range_template
    /string_algo /split :mstring_ref
 
-mstring_ref :ref_template :mstring
+algorithm_range_adaptors/string_algo +
+
+algorithm_range_adaptors/string_algo/split +
+
+mstring_ref + :ref_template :mstring
 
 mstring +
    mrange

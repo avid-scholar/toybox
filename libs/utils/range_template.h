@@ -7,6 +7,8 @@
 template <typename It>
 struct range_template
 {
+   typedef It iterator;
+
    It b, e;
 
    range_template () : b (It ()), e (It ()) {}
