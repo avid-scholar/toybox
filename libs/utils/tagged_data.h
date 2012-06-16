@@ -29,10 +29,11 @@ struct tagged_data
       tag_max = (tag_raw_type) (1 << (tag_bits - !((tag_raw_type) -1 > 0)))
    };
 
-   data_type data () const { return (data_type) data_raw; }
-   tag_type tag () const { return (tag_raw_type) tag_raw; }
+   data_type data () const { return (data_type) (data_raw_type) data_raw; }
+   tag_type tag () const { return (tag_type) (tag_raw_type) tag_raw; }
    tagged_data add (tag_type dt) const { return mk (data (), tag_raw + dt); }
 
+   //no constructor because of lf::shell
    static tagged_data mk (data_type d = data_type (), tag_type t = tag_type ())
    {
       tagged_data p;
