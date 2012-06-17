@@ -1,0 +1,102 @@
+#types:
+#        name              <no marker>
+#        call              :
+#        call (nullary)    + (for nullary call)
+#        citation          >> (until end of line)
+#        citation          \ (whole next block)
+#        citation          "..." (inplace)
+#        field             . (field)
+#        ? operator
+
+-extern type
+-extern typedef
+-extern import
+-extern module
+-extern function
+-extern if
+-extern else
+-extern elseif
+-extern endif
+-extern signed
+
+:typedef int4 >> int
+:typedef uint4 >> unsigned
+:typedef int8 >> long
+:typedef uint8 >> unsigned long
+:typedef byte >> char
+:typedef bool >> bool
+:typedef offset >> long
+:typedef size >> unsigned long
+
+:import  
+   .include >> memory.h
+   .function ma >> malloc
+   .function mf >> free
+
+:import
+   .include >> algorithm
+   .function lex_cmp >> std::lexicographical_compare
+
+:import
+   .include >> cstring
+   .function zlen  >> strlen
+   .function zcopy >> strcpy
+   .function ncopy >> strncpy
+
+:module m .path mem
+:module l .path locked
+:module t .path thread 
+
+:module n .path net
+:module ip .path ip ; .parent n
+:module tcp .path tcp ; .parent ip
+
+:type m/text
+   .member data byte_ptr
+   .method ptr_init .args r byte_ptr ; .body >> @data = @zcopy (@r);
+   .destroy 1.void data .body >> @bfree (@data);
+   .ctor .args ; .body >> @data = 0;
+   .ctor .args r m/text ; .body >> @data = strcpy (@r.@data);
+   .ctor .args d byte_ptr ; .body >> @data = strcpy (@d);
+   .operator `== .return bool ; .args r m/text/cref ; +const .body \
+      return @lex_cmp (@data, @data + @zlen (@data), @r.@data) == 0;
+   .operator `<  .return bool ; .args r m/text/cref ; +const .body \
+      return @lex_cmp (@data, @data + @zlen (@data), @r.@data) < 0;
+   :cast swap
+   :cast assign
+   :cast empty >> return @data == 0 || @zlen (@data) == 0;
+   .method extract 
+
+:type range
+   .template iter
+   .member b iter
+   .member e iter
+   .ctor .args b iter +default e iter +default
+   .method size .return size ; .body >> 
+   .method 
+
+:typedef byte_range :range byte/ptr
+:typedef byte_range_const :range byte/cptr
+
+:snipplet munpack .name
+
+:function find_substring
+   .return offset
+   .args s m/text pat m/text start offset +default
+   .body \
+      if (@pat.@m/text/empty ())
+         return 0;
+      @byte buf [@m/text/max];
+      @m/byte_const_range r = @s.@m/text/extract (buf);
+      for (@offset i = 0; i < r.@m/byte_const_range/size (); ++i)
+
+:type n/ip/tcp/endpoint
+   .member host m/text
+   .member port m/text
+   :cast composite
+
+
+:function n/ip/tcp/endpoint/parse
+   .return n/ip/tcp/edpoint ; .args r :range m/text ; .body \
+      @byte buf [@m/text/max];
+      @offset p = @find_substring ()
