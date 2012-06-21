@@ -1,12 +1,41 @@
 #types:
-#        name              <no marker>
 #        call              :
-#        call (nullary)    + (for nullary call)
 #        citation          >> (until end of line)
 #        citation          \ (whole next block)
 #        citation          "..." (inplace)
 #        field             . (field)
-#        ? operator
+
+:import if
+:import and
+:import or
+:import eq
+:import not
+:import list 
+:import head
+:import tail
+:import return
+:import lpush
+:import proc
+# :import catch
+# :import error
+# :import +
+
+:proc lbpush
+   .val v .list l
+   :if :eq l :list
+      :list v
+      :lpush :head l , :lbpush v :tail l
+
+:proc dpush
+   .key k .dict d
+   :
+      :find k d
+         aadjust k d apush
+         ainsert k d apush
+
+:proc type
+   :ainsert
+   
 
 -extern type
 -extern typedef
@@ -94,7 +123,6 @@
    .member host m/text
    .member port m/text
    :cast composite
-
 
 :function n/ip/tcp/endpoint/parse
    .return n/ip/tcp/edpoint ; .args r :range m/text ; .body \

@@ -2,6 +2,7 @@
 #define AEON__LIBS_UTILS_TAGGED_DATA_H 1
 
 #include "cxx.h"
+#include "types.h"
 
 template <typename T>
 struct tagged_traits

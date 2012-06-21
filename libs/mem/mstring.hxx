@@ -2,6 +2,7 @@
 #define AEON__LIBS_MEM_MSTRING_HXX 1
 
 #include "mstring.h"
+#include "maf.h"
 #include <cassert>
 
 inline void mstring::destroy ()
@@ -46,22 +47,20 @@ inline mstring::mstring (mstring const &r)
 //                         101 -- external static string, 16 byte node, size unlimited
 //                         100 -- external dynamic string, 8 byte header, 4 bytes for allocated, 4 byte for used
 //                         0xx -- unused
-//
-// thats too much
+
 struct mstring_package_type
 {
    enum e
    {
-      p8,
-      p7,
-      p6,
-      p5,
-      p4,
-      p3,
-      s,
-      sx,
-      d,
-      dn
+      p8, //8-bit
+//      p7, //7-bit ascii
+//      p6, //6-bit a-z A-Z 0-9 _ space
+//      p5, //5-bit a-z
+//      p4, //4-bit decimal digits
+//      p3, //3-bit ?! 0-7
+      s,  //static, size packed
+      d,  //dynamic, size packed
+      dn, //dynamic, node packed
    };
 };
 
@@ -72,11 +71,12 @@ inline void mstring::assign (mstring const &r)
 
    destroy ();
    if (r.packed () || r.empty ())
-      p = r.p;
-   else
    {
-      p = ptr_t::mk (malloc (r.size ()), 0);
+      p = r.p;
+      return;
    }
+
+   p = ptr_t::mk (ma <byte> (r.size ()), 0);
 }
 
 #if 0

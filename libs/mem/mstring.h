@@ -11,9 +11,21 @@
 
 typedef ref_template <struct mstring> mstring_ref;
 
+struct mstring_impl;
+
+template <>
+struct tagged_traits <mstring_impl>
+{
+   typedef mstring_impl * data_type;
+   typedef int8 data_raw_type;
+   typedef uint2 tag_type;
+   typedef uint2 tag_raw_type;
+   enum { data_bits = 48, tag_bits = 16 };
+};
+
 struct mstring
 {
-   typedef tagged_data <struct mstring_impl> ptr_t;
+   typedef tagged_data <mstring_impl> impl_t;
 
    mstring () { init (); }
    mstring (mstring const &);
@@ -30,7 +42,7 @@ struct mstring
    mstring & swap (mstring &r) { ut::swap (r.p, p); return *this; }
    mstring & clear () { destroy (); p = ptr_t::mk (); return *this; }
 
-   length size () const;
+   offset len () const;
 
    bool empty () const;
    bool packed () const; //empty () => !packed ()
@@ -44,7 +56,7 @@ private:
    void destroy ();
    void assign (mstring const &);
 
-   ptr_t p;
+   impl_t impl;
 };
 
 #endif //AEON__LIBS_MEM_MSTRING_H
