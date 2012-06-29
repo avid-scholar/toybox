@@ -59,4 +59,35 @@ private:
    impl_t impl;
 };
 
+struct mstring_limits
+{
+   enum e { max_packed_string = 64 };
+};
+
+struct mstring_proxy
+{
+   mstring_view (mstring const &);
+   mrange_const bytes () const;
+
+private:
+
+   char buf [mstring_limits::max_packed_string];
+};
+
+struct mstring_proxy_const
+{
+   mstring_view (mstring &s) : s (&s) {};
+   mrange bytes () const {};
+
+   void drop () {}
+   void writeback () { if (s) { s.assign (); } }
+   ~mstring_view () { writeback (); }
+
+private:
+
+   mrange r;
+   mstring *s;
+   char buf [mstring_limits::max_packed_string];
+};
+
 #endif //AEON__LIBS_MEM_MSTRING_H
