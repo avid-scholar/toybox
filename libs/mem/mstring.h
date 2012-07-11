@@ -61,25 +61,15 @@ private:
 
 struct mstring_limits
 {
-   enum e { max_packed_string = 64 };
+   enum e { max_packed_string = 64, max_packed_static_size = 2048 };
 };
 
 struct mstring_proxy
 {
-   mstring_view (mstring const &);
-   mrange_const bytes () const;
+   mstring_proxy (mstring &s) : r (s.extract (buf)), s (&s) {};
+   mrange bytes () const { return r; };
 
-private:
-
-   char buf [mstring_limits::max_packed_string];
-};
-
-struct mstring_proxy_const
-{
-   mstring_view (mstring &s) : s (&s) {};
-   mrange bytes () const {};
-
-   void drop () {}
+   void drop () { s = 0; }
    void writeback () { if (s) { s.assign (); } }
    ~mstring_view () { writeback (); }
 
@@ -87,6 +77,17 @@ private:
 
    mrange r;
    mstring *s;
+   char buf [mstring_limits::max_packed_string];
+};
+
+struct mstring_proxy_const
+{
+   mstring_proxy_const (mstring const &m) : r (m.extract (buf)) {};
+   mrange_const bytes () const { return r; }
+
+private:
+
+   mrange_const r;
    char buf [mstring_limits::max_packed_string];
 };
 

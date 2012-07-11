@@ -19,12 +19,40 @@
 # :import catch
 # :import error
 # :import +
+# :proc : lbpush
+#    .val v
+#    .list l
+#    :if :eq l [ ;
+#       [ v
+#       :lpush :head l , :lbpush v :tail l
+# 
+# def "lbpush
+#    .val v .list l
+#    if l = ; , [ v ; cat lbpush tail
+# + a b
+# a + b
+#lbpush , v val alias l list alias <args , l list eq if <proc
 
-:proc lbpush
-   .val v .list l
-   :if :eq l :list
-      :list v
-      :lpush :head l , :lbpush v :tail l
+#proc
+#   .name lbpush
+#   .arg v .arg l
+#   .res
+#      if l = [ ;
+#         [ v
+#         lpush
+#            head l
+#            lbpush v tail l
+#
+#proc
+#   .name fact
+#   .arg n
+#   .res
+#      if n = 0 , 1 , n * fact n - 1
+#
+#proc fib n if n < 2 , n , fib n - 1 ; + fib n - 2
+#proc f2
+#
+#proc fold' , l op , op head l , fold tail l , op
 
 :proc dpush
    .key k .dict d

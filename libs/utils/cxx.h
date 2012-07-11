@@ -1,6 +1,8 @@
 #ifndef AEON__LIBS_UTILS_CXX_H
 #define AEON__LIBS_UTILS_CXX_H 1
 
+#include "types.h"
+
 template <bool b, typename Then, typename Else>
 struct if_
 {
@@ -54,5 +56,10 @@ struct enable_if
 {
    typedef T type;
 };
+
+template <uint8 N> struct nbin { static const uint8 value = N % 10 + 2 * nbin <N / 10>::value; };
+template <> struct nbin <0> { static const uint8 value = 0; };
+
+#define BN(num) nbin <num>::value
 
 #endif //AEON__LIBS_UTILS_CXX_H
