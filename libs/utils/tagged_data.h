@@ -4,29 +4,24 @@
 #include "cxx.h"
 #include "types.h"
 
-template <typename T>
-struct tagged_traits
-{
-   typedef T *  data_type;
-   typedef long tag_type;
-   typedef long data_raw_type;
-   typedef long tag_raw_type;
-   enum { data_bits = 48, tag_bits = 16 };
-};
+template <typename T> struct tagged_traits_data_type     {  typedef T *  type;   };
+template <typename T> struct tagged_traits_data_raw_type {  typedef int8 type;   };
+template <typename T> struct tagged_traits_tag_type      {  typedef int8 type;   };
+template <typename T> struct tagged_traits_tag_raw_type  {  typedef int8 type;   };
+template <typename T> struct tagged_traits_bits          {  enum { data = 16 };  };
 
 template <typename T>
 struct tagged_data
 {
-   typedef tagged_traits <T> traits_type;
-   typedef typename traits_type::data_type data_type;
-   typedef typename traits_type::tag_type tag_type;
-   typedef typename traits_type::data_raw_type data_raw_type;
-   typedef typename traits_type::tag_raw_type tag_raw_type;
+   typedef typename tagged_traits_data_type <T>::type       data_type;
+   typedef typename tagged_traits_data_raw_type <T>::type   data_raw_type;
+   typedef typename tagged_traits_tag_type <T>::type        tag_type;
+   typedef typename tagged_traits_tag_raw_type <T>::type    tag_raw_type;
 
    enum
    {
-      tag_bits = traits_type::tag_bits,
-      data_bits = traits_type::data_bits,
+      tag_bits = tagged_traits_bits::data,
+      data_bits = 64 - tag_bits,
       tag_max = (tag_raw_type) (1 << (tag_bits - !((tag_raw_type) -1 > 0)))
    };
 

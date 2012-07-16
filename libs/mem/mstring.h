@@ -7,24 +7,13 @@
 #include "utils/marks.h"
 #include "utils/swap.h"
 #include "utils/tagged_data.h"
-#include "utils/ref_template.h"
-
-typedef ref_template <struct mstring> mstring_ref;
 
 struct mstring_impl;
 
-template <>
-struct tagged_traits <mstring_impl>
-{
-   typedef mstring_impl * data_type;
-   typedef int8 data_raw_type;
-   typedef uint2 tag_type;
-   typedef uint2 tag_raw_type;
-   enum { data_bits = 48, tag_bits = 16 };
-};
-
 struct mstring
 {
+   enum e { max_packed_string = 64, max_packed_static_size = 2048, max_packed_dynamic_size = 1024 };
+
    typedef tagged_data <mstring_impl> impl_t;
 
    mstring () { init (); }
@@ -59,14 +48,9 @@ private:
    impl_t impl;
 };
 
-struct mstring_limits
+struct mstring_view
 {
-   enum e { max_packed_string = 64, max_packed_static_size = 2048 };
-};
-
-struct mstring_proxy
-{
-   mstring_proxy (mstring &s) : r (s.extract (buf)), s (&s) {};
+   mstring_view (mstring &s) : r (s.extract (buf)), s (&s) {};
    mrange bytes () const { return r; };
 
    void drop () { s = 0; }
@@ -77,18 +61,19 @@ private:
 
    mrange r;
    mstring *s;
-   char buf [mstring_limits::max_packed_string];
+   char buf [mstring::max_packed_string];
 };
 
-struct mstring_proxy_const
+
+struct mstring_view_const
 {
-   mstring_proxy_const (mstring const &m) : r (m.extract (buf)) {};
+   mstring_view_const (mstring const &m) : r (m.extract (buf)) {};
    mrange_const bytes () const { return r; }
 
 private:
 
    mrange_const r;
-   char buf [mstring_limits::max_packed_string];
+   char buf [mstring::max_packed_string];
 };
 
 #endif //AEON__LIBS_MEM_MSTRING_H

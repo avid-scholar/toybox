@@ -24,7 +24,7 @@ struct range
       e (r.e)
    {}
 
-   ulong size () const { return e - b; }
+   int8 size () const { return e - b; }
 };
 
 #endif //AEON__LIBS_UTILS_RANGE_H

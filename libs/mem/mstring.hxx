@@ -44,7 +44,7 @@ inline mstring::mstring (mstring const &r)
 //                      block is x8 aligned 1024 bytes max
 //                      sizes below 7 indicate external size:
 //                         110 -- external static string, 8 byte node, size under 65535 + 1024 (adjusted)
-//                         101 -- external static string, 16 byte node, size unlimited
+//                       + 101 -- external static string, 16 byte node, size unlimited
 //                         100 -- external dynamic string, 8 byte header, 4 bytes for allocated, 4 byte for used
 //                         0xx -- unused
 
@@ -64,10 +64,52 @@ struct mstring_package_type
    };
 };
 
-template <mstring_package_type::e pt>
-struct mstring_package_mask;
+template <mstring_package_type::e pt> struct mstring_package_mask;
 
 struct mstring_package_mask <mstring_package_type::p8> { enum { bits = 5, mask = 0, sw = 3, sb = 0 }; };
+
+struct mstring_node
+{
+   bool static_node : 1;
+   int8 size : 63;
+   byte [] more;
+};
+
+struct mstring_static_node : public mstring_node
+{
+   void set (byte *b, int8 sz)
+   {
+      static_node = true;
+      size = sz;
+      data = b; 
+   }
+
+   byte *data;
+};
+
+template <int8 N>
+struct nbin;
+
+template <> struct nbin <0l>
+{
+   static const int8 w = 0;
+   static const int8 v = 0;
+};
+
+template <int8 N>
+struct nbin
+{
+   static const int8 w = 1 + nbin <N / 10>::w;
+   static const int8 v = N % 10 + 2 * nbin <N / 10>::value;
+};
+
+template <int8 N>
+inline
+int8
+operator| (nbin <N> nb, int8 sz)
+{
+   return (nb.v << (16 - nb.w)) | sz; //**
+}
 
 inline void mstring::assign (mstring const &r)
 {
@@ -81,59 +123,89 @@ inline void mstring::assign (mstring const &r)
       return;
    }
 
-   p = ptr_t::mk (ma (r.size ()), 0);
-}
+   if (pack_xss (r))
+      return;
 
-struct mstring_node
-{
-   bool static_node : 1;
-   uint8 size : 63;
-   byte [] more;
-};
-
-struct mstring_static_node : public mstring_node
-{
-   void set (byte *b, uint8 sz)
+   int8 sz = r.size ();
+   bool can_use_xss = sz < max_packed_dynamic_size;
+   byte *b = alloc_bytes (can_use_xss ? sz : sz + 8);
+   mrange_const mr = r.extract (mrange_const ());
+   if (!can_use_xss)
    {
-      static_node = true;
-      size = sz;
-      data = b; 
+      std::copy (mr.b, mr.e, b + 8);
+      (mstring_node*)b->static_node = false;
+      (mstring_node*)b->size = sz;
+      p = ptr_t::mk (b, bin <101110> % 4);
+      return;
    }
 
-   byte *data;
-};
-
-template <int N>
-struct nbin;
-
-template <> struct nbin <0> { static const uint8 v = 0; }
-template <int N> struct nbin { static const uint8 v = N % 10 + 2 * nbin <N / 10>::value; }
+   std::copy (mr.b, mr.e, b);
+   p = ptr_t::mk (b, bin <101110> % sz);
+}
 
 mstring::mstring (mrange_const r, tag__static)
 {
-   uint8 rs = r.size ();
+   int8 rs = r.size ();
    if (rs == 0)
    {
       p = ptr_t::mk (0, 0);
       return;
    }
 
-   if (rs <= mstring_limits::max_packed_static_size)
+   if (rs < mstring::max_packed_static_size)
    {
-      p = ptr_t::mk (r.b, rs - 1);
+      p = ptr_t::mk (r.b, nbin <10110> | rs);
       return;
    }
 
-   mstring_static_node *n = tma <mstring_static_node> ();
+   mstring_static_node *n = alloc_obj <mstring_static_node> ();
    n->set (r.b, rs);
-   p = ptr_t::mk (n, nbin <101110>::value << 10);
+   p = ptr_t::mk (n, nbin <101110> | nbin <101>::value);
+}
+
+mstring::mstring (mrange_const r)
+{
+   int8 rs = r.size ();
+   if (rs < 8)
+   {
+      int8 str = *(int8*) r.b;
+      p = ptr_t::mk ((void*) (str / 256), rs + str % 256 * 256);
+      return;
+   }
+
+   if (pack_xss (r))
+      return;
+      
+
+   if (rs < mstring::max_packed_dynamic_size)
+   {
+      pack_xd ();
+      return;
+   }
+}
+
+mstring::mstring (mstring &r)
+{
+   init_empty ();
+   swap (r);
+}
+
+mstring::mstring (mstring const &r)
+{
+   init_empty ();
+   assign (r);
+}
+
+mstring& mstring::operator= (mstring const &r)
+{
+   assign (r);
 }
 
 #if 0
-   mstring (mrange_const);
-   mstring (mstring_ref mr) { init_empty (); mr.move_to (*this); }
-   mstring& operator= (mstring const &r);
-   bool operator== (mstring const &r) const;
+bool mstring::operator== (mstring const &r) const
+{
+   
+}
    bool operator!= (mstring const &r) const {return ! (*this == r); }
    bool operator< (mstring const &r);
 
