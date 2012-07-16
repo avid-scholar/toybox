@@ -42,7 +42,6 @@ private:
    fmt f;
 };
 
-
 typedef lfmt trc;
 typedef lfmt dbg;
 typedef lfmt inf;
