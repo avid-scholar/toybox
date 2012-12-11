@@ -135,12 +135,12 @@ inline void mstring::assign (mstring const &r)
       std::copy (mr.b, mr.e, b + 8);
       (mstring_node*)b->static_node = false;
       (mstring_node*)b->size = sz;
-      p = ptr_t::mk (b, bin <101110> % 4);
+      p = ptr_t::mk (b, nbin <101110> % 4);
       return;
    }
 
    std::copy (mr.b, mr.e, b);
-   p = ptr_t::mk (b, bin <101110> % sz);
+   p = ptr_t::mk (b, nbin <101110> % sz);
 }
 
 mstring::mstring (mrange_const r, tag__static)
