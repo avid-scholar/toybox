@@ -128,3 +128,15 @@ scan_kit
 format_kit
    mstream
    format
+
+lua_chassis
+    /stub :lu
+
+lua_chassis/stub
+
+lu
+    /loader
+    /core
+
+lu/loader +
+
