@@ -1,0 +1,2 @@
+lib ext_dl : : <name>dl ;
+exe lu : [ glob *.cpp ] ext_dl ;
