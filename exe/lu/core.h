@@ -17,4 +17,11 @@ core_insert (core *, bytes s, binary_node * b);
 bool
 core_dispatch (core *, bytes s, data arg, data * result);
 
+//event loop
+bool
+core_event_wait (core *);
+
+bool
+core_event_process_all (core *);
+
 #endif //AEON__EXE_LU_CORE_H

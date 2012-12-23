@@ -1,4 +1,5 @@
 #include "core.h"
+#include "libs/futex_queue.h"
 
 #include <map>
 
@@ -43,4 +44,18 @@ core_dispatch (core * c, bytes s, data arg, data * result)
     user_function uf = binary_node_user_function (it->second);
     *result = uf.method (uf.object, arg);
     return true;
+}
+
+bool
+core_event_wait (core * c)
+{
+    //TODO: futex-wait based quit trigger
+    sleep (100000000);
+    return true;
+}
+
+bool
+core_event_process_all (core * c)
+{
+
 }
