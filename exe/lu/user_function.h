@@ -5,7 +5,7 @@
 
 typedef void * opaque_pointer;
 
-typedef data (user_c_function_pointer) (opaque_pointer, data *);
+typedef data (user_c_function_pointer) (opaque_pointer, data);
 
 struct user_function
 {

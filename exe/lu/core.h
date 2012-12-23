@@ -2,26 +2,19 @@
 #define AEON__EXE_LU_CORE_H 1
 
 #include "binary.h"
-#include <map>
 
-struct core
-{
-    std::map <std::string, binary_node *> core_node_map; 
-    
-    bool add (std::string s, binary_node * bn)
-    {
-        bool r = nodes.insert (std::make_pair (s, bn)).second;
-        if (!r)
-            binary_node_score (bn, -1);
+struct core;
 
-        return r;
-    }
+core *
+core_construct ();
 
-    ~core ()
-    {
-        for (core_node_map::iterator it = nodes.begin (); it != node.end (); ++it)
-            binary_node_score (it->second, -1);
-    }
-};
+void
+core_destruct (core *);
+
+bool
+core_insert (core *, bytes s, binary_node * b);
+
+bool
+core_dispatch (core *, bytes s, data arg, data * result);
 
 #endif //AEON__EXE_LU_CORE_H

@@ -1,4 +1,5 @@
 #include "binary.h"
+#include "load.h"
 #include <cassert>
 
 struct binary_node
