@@ -35,16 +35,22 @@ load (
     if (mod.uf.method == NULL)
         return NULL;
 
-    loader_node * n = new loader_node ();
-    n->mod = mod;
-    n->handle = handle;
-    return n;
+    loader_node * l = new loader_node ();
+    l->mod = mod;
+    l->handle = handle;
+    return l;
 }
 
 void
-unload (loader_node *n)
+unload (loader_node * l)
 {
-    n->mod.destroy_node (n->mod.node);
-    dlclose (n->handle);
-    delete n;
+    l->mod.destroy_node (l->mod.node);
+    dlclose (l->handle);
+    delete l;
+}
+
+user_function
+loader_user_function (loader_node * l)
+{
+    return l->mod.uf;
 }
