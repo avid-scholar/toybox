@@ -1,59 +1,60 @@
 #ifndef AEON__LIBS_LF_FUTEX_QUEUE_H
 #define AEON__LIBS_LF_FUTEX_QUEUE_H 1
 
-#include <linux/futex.h>
-#include <sys/syscall.h>
+void *
+futex_queue_pop (void ** head, bool block);
 
-template <typename T>
-struct futex_queue
+void
+futex_queue_push (void ** head, void ** n);
+
+void
+futex_queue_wake (void ** head);
+
+void
+futex_queue_sleep (void ** head);
+
+inline
+void *
+futex_queue_pop (void ** head, bool block)
 {
-   futex_queue () : head (0) {}
-
-   typedef T node;
-
-   node *head;
-
-   node *pop (bool block = true)
-   {
-      for ( ; ; )
-      {
-         node *p = head;
-         if (p == 0 || p == (node *) -1)
-         {
-            if (p || __sync_bool_compare_and_swap (&head, 0, (node *) -1))
+    for ( ; ; )
+    {
+        void * p = head;
+        if (p == 0 || p == (void *) -1)
+        {
+            if (p || __sync_bool_compare_and_swap (head, 0, (void *) -1))
             {
-               if (block)
-                  syscall (SYS_futex, &head, FUTEX_WAIT, -1u, NULL, NULL, 0);
-               else
-                  return 0;
+                if (block)
+                    futex_queue_sleep (head);
+                else
+                    return 0;
             }
-         
+
             continue;
-         }
+        }
 
-         if (__sync_bool_compare_and_swap (&head, p, 0))
+        if (__sync_bool_compare_and_swap (head, p, 0))
             return p; 
-      }
-   }
+    }
+}
 
-   void push (node *n)
-   {
-      for ( ; ; )
-      {
-         node *h = head;
-         bool wake = h == (node *) -1l;
-         n->next = wake ? 0 : h;
-         if (__sync_bool_compare_and_swap (&head, h, n))
-         {
+inline
+void
+futex_queue_push (void ** head, void ** n)
+{
+    for ( ; ; )
+    {
+        void * h = *head;
+        bool wake = h == (void *) -1l;
+        *n = wake ? 0 : h;
+        if (__sync_bool_compare_and_swap (head, h, n))
+        {
             if (wake)
-               this->wake ();
+                futex_queue_wake (head);
 
             return;
-         }
-      }
-   }
-
-   void wake () { syscall (SYS_futex, &head, FUTEX_WAKE, 1, NULL, NULL, 0); }
-};
+        }
+    }
+}
 
 #endif //AEON__LIBS_LF_FUTEX_QUEUE_H

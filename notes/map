@@ -136,7 +136,23 @@ lua_chassis/stub
 
 lu
     /loader
+    /binary
     /core
 
+lu/binary +
+
 lu/loader +
+
+lu/core
+    /map
+    /queue
+
+lu/core/queue
+    /external_futex_queue
+
+lu/core/map +
+    /cell
+    /stub
+
+lu/core/map/stub +
 
