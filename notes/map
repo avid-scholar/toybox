@@ -97,11 +97,6 @@ lf_stock + :lf_aux
 lf_tool_ptr + :lf_aux
 lf_stack + :lf_tool_ptr
 
-futex_que
-   lf_stock :lf_aux
-   /stub
-   /futex_wrapper :syscall_wrapper
-
 mchunk_lf_cache
    lf_stack
 
@@ -149,6 +144,11 @@ lu/core
 
 lu/core/queue
     /external_futex_queue
+
+lu/core/queue/external_futex_queue +
+    /test
+
+lu/core/queue/external_futex_queue/test +
 
 lu/core/map +
     /cell

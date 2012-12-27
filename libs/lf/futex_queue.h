@@ -19,7 +19,7 @@ futex_queue_pop (void ** head, bool block)
 {
     for ( ; ; )
     {
-        void * p = head;
+        void * p = *head;
         if (p == 0 || p == (void *) -1)
         {
             if (p || __sync_bool_compare_and_swap (head, 0, (void *) -1))
@@ -34,7 +34,7 @@ futex_queue_pop (void ** head, bool block)
         }
 
         if (__sync_bool_compare_and_swap (head, p, 0))
-            return p; 
+            return p;
     }
 }
 

@@ -1,0 +1,3 @@
+lib ext_bthread : : <name>boost_thread ;
+
+exe fq : futex_queue.cpp ../../libs/lf//futex_queue ext_bthread ;
