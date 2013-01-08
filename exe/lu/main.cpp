@@ -8,6 +8,5 @@ int main (int argc, char const * argv [])
     for (int i = 1; i < argc; ++i)
         do_lua_config (c, argv [i]);
 
-    while (core_event_wait (c))
-        core_event_process_all (c);
+    core_run_event_loop (c);
 }

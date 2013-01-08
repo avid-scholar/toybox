@@ -1,7 +1,7 @@
 #include "die.h"
 
 #include <cstdio>
-
+#include <cstdarg>
 
 void
 die_actually (char const * file, long line, char const *fmt, ...)

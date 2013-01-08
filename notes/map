@@ -128,8 +128,18 @@ lua_chassis
     /stub :lu
 
 lua_chassis/stub
+    /thread_so
+    /script_so
+    /tcp_so
+    /timer_so
+    /cache_so
+    /dbi_so
 
-lu
+lua_chassis/stub/tcp_so
+    /server
+    /client
+
+lu +
     /loader
     /binary
     /core
@@ -138,11 +148,11 @@ lu/binary +
 
 lu/loader +
 
-lu/core
+lu/core +
     /map
     /queue
 
-lu/core/queue
+lu/core/queue +
     /external_futex_queue
 
 lu/core/queue/external_futex_queue +

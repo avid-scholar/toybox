@@ -1,2 +1,2 @@
 lib ext_dl : : <name>dl ;
-exe lu : [ glob *.cpp ] ext_dl ;
+exe lu : [ glob *.cpp ] ext_dl ../../libs/lf//futex_queue ;

@@ -25,7 +25,7 @@ prod ()
     {
         node * n = (node *) malloc (sizeof (node));
         n->data = strdup ("hello");
-        futex_queue_push ((void **) &list, (void **) n);
+        futex_queue_push ((void **) &list, (void *) n, (void **) & n->next);
         ++s;
     }
 
