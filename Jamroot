@@ -19,7 +19,7 @@ actions map_draw
 make map.svg : map.DOT : @map_render ;
 actions map_render
 {
-   dot -Tsvg < $(>) > $(<) ; test -L m && rm m; ln -s $(<) m
+   dot -Tsvg < $(>) > $(<); test -L m && rm m; ln -s $(<) m
 }
 
 alias map : map.svg ;

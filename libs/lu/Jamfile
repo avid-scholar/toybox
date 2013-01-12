@@ -1,0 +1,1 @@
+lib lu_thread : thread/thread.cpp ;

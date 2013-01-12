@@ -135,6 +135,12 @@ lua_chassis/stub
     /cache_so
     /dbi_so
 
+lua_chassis/stub/thread_so
+    futex_lock_queue
+
+futex_lock_queue
+    futex_queue
+
 lua_chassis/stub/tcp_so
     /server
     /client
@@ -153,12 +159,12 @@ lu/core +
     /queue
 
 lu/core/queue +
-    /external_futex_queue
+    futex_queue
 
-lu/core/queue/external_futex_queue +
+futex_queue +
     /test
 
-lu/core/queue/external_futex_queue/test +
+futex_queue/test +
 
 lu/core/map +
     /cell

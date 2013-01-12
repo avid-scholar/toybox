@@ -1,25 +1,46 @@
 #ifndef AEON__LIBS_LF_FUTEX_QUEUE_H
 #define AEON__LIBS_LF_FUTEX_QUEUE_H 1
 
+#include <cassert>
+
 void *
 futex_queue_pop (void ** head, bool block);
 
 void
 futex_queue_push (void ** head, void * n, void ** nnext);
 
-void
+bool
 futex_queue_wake (void ** head);
 
 void
 futex_queue_sleep (void ** head);
 
 bool
-futex_queue_test_empty (void * head)
-{
-    return head;
-}
+futex_queue_test_empty (void * head);
+
+bool
+futex_queue_test_sleepy (void * head);
+
+bool
+futex_queue_try_lock (void ** head);
+
+void
+futex_queue_unlock (void ** head);
 
 #define QUEUE_SLEEP_MARK (void *) 1l
+#define QUEUE_LOCK_MARK (void *) 2l
+
+bool
+futex_queue_test_empty (void * head)
+{
+    return head == 0 || head == QUEUE_SLEEP_MARK;
+}
+
+bool
+futex_queue_test_sleepy (void * head)
+{
+    return head == QUEUE_SLEEP_MARK;
+}
 
 inline
 void *
@@ -60,6 +81,33 @@ futex_queue_push (void ** head, void * n, void ** nnext)
 
             return;
         }
+    }
+}
+
+bool
+futex_queue_try_lock (void ** head)
+{
+    for ( ; ; )
+    {
+        void * h = *head;
+        if ((long) h & (long) QUEUE_LOCK_MARK)
+            return false;
+
+        if (__sync_bool_compare_and_swap (head, h, (long) h | (long) QUEUE_SLEEP_MARK))
+            return true;
+    }
+}
+
+void
+futex_queue_unlock (void ** head)
+{
+    for ( ; ; )
+    {
+        void * h = *head;
+        assert (((long) h & (long) QUEUE_LOCK_MARK) == 0);
+
+        if (__sync_bool_compare_and_swap (head, h, (void*) ((long) h & (~(long) QUEUE_LOCK_MARK))))
+            return;
     }
 }
 
